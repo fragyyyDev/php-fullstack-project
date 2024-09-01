@@ -10,7 +10,7 @@ include "../db/db.php";
     var_dump($id);
 
 if(isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["isAdmin"])){    
-    $sql = "UPDATE cms_users SET email = :email, password = :password , isAdmin = :isAdmin WHERE ID = :id";
+    $sql = "UPDATE cms_users SET email = :email, pass = :password , admin = :isAdmin WHERE ID = :id";
     $ins = [
         ":id" => $id,
         ":email" => $_POST["email"],

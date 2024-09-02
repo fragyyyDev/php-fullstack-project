@@ -70,6 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['hashedPass'] = $passwordHashed;
         $_SESSION['email'] = $email;
         $_SESSION['TIME'] = time();
+        $_SESSION['admin'] = 0;
         header("Location: ../client/main.php");
         exit(); 
     } else {

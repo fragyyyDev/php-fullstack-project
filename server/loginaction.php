@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header( "refresh:2;url=../client/login.php" );
         } else {
             if($data[0]['admin'] == 1){
-                $_SESSION["admin"] = true;
+                $_SESSION["admin"] = 1;
             };
             $_SESSION["LOGGED"] = true;
             $_SESSION['ID'] = $data[0]['ID'];

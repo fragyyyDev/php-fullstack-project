@@ -84,7 +84,7 @@ $htmlClient = "<!DOCTYPE html>
 </script>
 </html>";
 
-// Function to get profile picture directory and extension
+
 function getPfpDirFromUserId($db, $userIDpost) {
     $insDataPfp = [
         ':userID' => $userIDpost,
@@ -92,19 +92,19 @@ function getPfpDirFromUserId($db, $userIDpost) {
     $sqlGetPfpDir = 'SELECT * FROM `cms_pfp` WHERE userID = :userID';
     $con = $db->prepare($sqlGetPfpDir);
     $con->execute($insDataPfp);
-    $dataPfp = $con->fetchAll(PDO::FETCH_ASSOC);
+    $dataPfp = $con->fetch(PDO::FETCH_ASSOC); 
 
-    if (!empty($dataPfp)) {
-        $dir = $dataPfp[0]['userID'];
-        $extension = $dataPfp[0]['extension'];
+    if ($dataPfp) { 
+        $dir = $dataPfp['userID'];
+        $extension = $dataPfp['extension'];
         return $dir . '.' . $extension;
     } else {
-        return null; // Return null if no profile picture is found
+        return null; 
     }
 }
 
-if (isset($_SESSION['adminMODE']) && isset($_SESSION['LOGGED'])) {
-    if ($_SESSION['adminMODE'] == true && $_SESSION['LOGGED'] == true) {
+if (isset($_SESSION['admin']) && isset($_SESSION['LOGGED'])) {
+    if ($_SESSION['admin'] == 1 && $_SESSION['LOGGED'] == true) {
         header("Location: admin.php");
     }
 } else {
@@ -121,35 +121,39 @@ echo '    <div class="divide-y divide-gray-200">';
 foreach ($dataPosts as $post) {
     echo '        <div class="p-4">';
     
-    // Author section
     echo '            <div class="flex items-center mb-4">';
     
     if ($userID) {
         $profileImage = getPfpDirFromUserId($db, $post['authorID']);
         if ($profileImage) {
-            echo '                <img src="../pfp/' . htmlspecialchars($profileImage) . '" alt="Profile Picture" class="w-12 h-12 rounded-full mr-3">';
+            echo "<img class='w-16 h-16 rounded-full' src='../pfp/" . htmlspecialchars($profileImage) . "'>";
         } else {
-            echo '                <img src="../pfp/default-profile.png" alt="Default Profile Picture" class="w-12 h-12 rounded-full mr-3">';
+            echo "<img class='w-16 h-16 rounded-full' src='../pfp/default.jpg'>"; 
         }
     } else {
-        echo '                <img src="../pfp/default-profile.png" alt="Default Profile Picture" class="w-12 h-12 rounded-full mr-3">';
+        echo '<img src="../pfp/default.jpg" alt="Default Profile Picture" class="w-12 h-12 rounded-full mr-3">';
     }
-    if($post['authorID']){
+    if ($post['authorID']) {
         $sqlGetAuthorName = 'SELECT * FROM `cms_users_meta` WHERE userID = :userID';
         $con = $db->prepare($sqlGetAuthorName);
         $con->execute(array(':userID' => $post['authorID']));
-        $dataAuthorName = $con->fetch(PDO::FETCH_ASSOC);
-
-        if($dataAuthorName){
-            foreach($dataAuthorName as $k => $v){
-                if($k == 'keyWord'){
-                    $username = $dataAuthorName['value'];
-                }
+        $dataAuthorName = $con->fetchAll(PDO::FETCH_ASSOC);
+    
+        $username = $post['authorID']; 
+    
+        foreach ($dataAuthorName as $row) {
+            if ($row['keyWord'] == 'username') {
+                $username = $row['value'];
+                break; 
             }
         }
+    
     }
-    echo '                <div class="font-semibold text-gray-800">' . htmlspecialchars($username) . '</div>';
-    echo '            </div>';
+    echo '<div class="font-semibold text-gray-800">';
+    echo '<a href="profiles.php?post=' . htmlspecialchars($post['authorID']) . '">';
+    echo htmlspecialchars($username);
+    echo '</a>';
+    echo '</div>';    echo '            </div>';
 
     // Image section
     if (!empty($post['image'])) {

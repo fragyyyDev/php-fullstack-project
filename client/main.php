@@ -84,6 +84,12 @@ $htmlClient = "<!DOCTYPE html>
 </script>
 </html>";
 
+if(isset($_SESSION['admin'])){
+    if($_SESSION['admin'] == 1){
+        echo "<a href='../admin/index.php'>Admin panel</a>";
+    }
+}
+
 function getPfpDirFromUserId($db, $userIDpost) {
     $insDataPfp = [
         ':userID' => $userIDpost,
@@ -184,11 +190,6 @@ foreach ($dataPosts as $post) {
     }
 }
 
-if(isset($_SESSION['admin'])){
-    if($_SESSION['admin'] == 1){
-        echo "<a href='../admin/index.php'>Admin panel</a>";
-    }
-}
 
 echo '    </div>';
 echo '</div>';

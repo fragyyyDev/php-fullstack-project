@@ -87,5 +87,6 @@ $data = $con->fetchAll(PDO::FETCH_ASSOC);
         }
         ?>
     </table>
+    <a href="../adminPosts/index.php">POST MANAGEMENT</a>
 </body>
 </html>

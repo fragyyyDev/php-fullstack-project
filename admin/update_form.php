@@ -29,10 +29,10 @@ if(isset($_GET) && is_numeric($_GET["id"]) && is_numeric($_GET["page"]) ){
     $con = $db->prepare($sql);
     $con->execute($ins);
     $data = $con->fetchAll(PDO::FETCH_ASSOC);
-    if(count($data) == 1 && isset($data[0]["email"]) && isset($data[0]["password"]) && isset($data[0]["isAdmin"])){
+    if(count($data) == 1 && isset($data[0]["email"]) && isset($data[0]["password"]) && isset($data[0]["admin"])){
         $email = $data[0]["email"];
         $password = $data[0]["password"];
-        $isAdmin = $data[0]["isAdmin"];
+        $isAdmin = $data[0]["admin"];
     }
 }
 

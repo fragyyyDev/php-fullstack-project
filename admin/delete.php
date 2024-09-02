@@ -1,6 +1,7 @@
 <?php 
 
 include "../db/db.php";
+session_start();
 
 if (isset($_SESSION['admin']) && isset($_SESSION['LOGGED'])) {
     if ($_SESSION['admin'] == 1 && $_SESSION['LOGGED'] == true) {

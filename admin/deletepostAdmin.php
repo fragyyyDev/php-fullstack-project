@@ -1,4 +1,6 @@
 <?php 
+session_start();
+include "../db/db.php";
 
 if(isset($_SESSION['admin'])){
     if($_SESSION['admin'] == 1 ){

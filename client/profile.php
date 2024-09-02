@@ -60,6 +60,7 @@ $con = $db->prepare($sqlGetProfileInfo);
 $con->execute($ins_dataProfile);
 $dataProfileInfo = $con->fetchAll(PDO::FETCH_ASSOC);
 
+$_SESSION['ID'] = $dataProfileInfo[0]['ID'];
 
 $ins_dataProfileID = [
     ":userID" => $dataProfileInfo[0]['ID']

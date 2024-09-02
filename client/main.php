@@ -84,7 +84,6 @@ $htmlClient = "<!DOCTYPE html>
 </script>
 </html>";
 
-
 function getPfpDirFromUserId($db, $userIDpost) {
     $insDataPfp = [
         ':userID' => $userIDpost,
@@ -103,8 +102,8 @@ function getPfpDirFromUserId($db, $userIDpost) {
     }
 }
 
-if (isset($_SESSION['admin']) && isset($_SESSION['LOGGED'])) {
-    if ($_SESSION['admin'] == 1 && $_SESSION['LOGGED'] == true) {
+if (isset($_SESSION['adminMODE']) && isset($_SESSION['LOGGED'])) {
+    if ($_SESSION['adminMODE'] == true && $_SESSION['LOGGED'] == true) {
         header("Location: admin.php");
     }
 } else {

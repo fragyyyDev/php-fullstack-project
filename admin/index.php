@@ -4,6 +4,16 @@
 
 //--------------------------------------------------------
 
+if (isset($_SESSION['admin']) && isset($_SESSION['LOGGED'])) {
+    if ($_SESSION['admin'] == 1 && $_SESSION['LOGGED'] == true) {
+
+    } else {
+        header("Location: ../client/register.php");
+    }
+} else {
+    header("Location: ../client/register.php");
+}
+
 $sqlUsers = "SELECT COUNT(*) as total FROM cms_users";
 
 $c = $db->prepare($sqlUsers);

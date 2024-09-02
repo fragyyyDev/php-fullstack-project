@@ -4,6 +4,17 @@
 include "../db/db.php";
 session_start();
 
+if (isset($_SESSION['admin']) && isset($_SESSION['LOGGED'])) {
+    if ($_SESSION['admin'] == 1 && $_SESSION['LOGGED'] == true) {
+
+    } else {
+        header("Location: ../client/register.php");
+    }
+} else {
+    header("Location: ../client/register.php");
+}
+
+
 //-----------------------------------------------------------------------------------------
 
 if(isset($_GET) && is_numeric($_GET["id"]) && is_numeric($_GET["page"]) ){

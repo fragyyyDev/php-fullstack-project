@@ -3,7 +3,6 @@ session_start();
 
 
 if (isset($_SESSION['LOGGED']) && $_SESSION['LOGGED'] == true) {
-    echo $htmlClient;
 } else {
     header("Location: register.php");
 }

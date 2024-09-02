@@ -1,7 +1,6 @@
 <?php 
 session_start();
 include "../db/db.php";
-// dodelat to, ze to kontroluje jestli je post toho dotycnyho jinak nekdo si da do kotvy ?id=5 a smaze nekomu post
 
 if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_SESSION['ID'])) {
     $id = $_GET['id'];
@@ -15,15 +14,13 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_SESSION['ID'])) {
     $checkCon->execute($checkIns);
     $post = $checkCon->fetch(PDO::FETCH_ASSOC);
 
-    if ($post) { // If the post exists and is owned by the logged-in user
+    if ($post) { 
         $sql = "DELETE FROM cms_posts WHERE postID = :id";
         $ins = [
             ":id" => $id
         ];
         $con = $db->prepare($sql);
         $con->execute($ins);
-
-        // Redirect back to the previous page
         $goBackUrl = $_SESSION['redirectBackUrl'];
         header('Location:' . $goBackUrl);
         exit();
@@ -32,5 +29,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_SESSION['ID'])) {
     }
 } else {
     echo 'No post to delete or invalid post ID. or you are not logged in and we cant figure out if its your post';
-}
+} 
 ?>
+

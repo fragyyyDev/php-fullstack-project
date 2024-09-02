@@ -109,6 +109,7 @@ if (isset($_SESSION['adminMODE']) && isset($_SESSION['LOGGED'])) {
 } else {
     if (isset($_SESSION['LOGGED']) && $_SESSION['LOGGED'] == true) {
         echo $htmlClient;
+        $userID = $_SESSION['ID'];
     } else {
         header("Location: register.php");
     }
@@ -171,8 +172,26 @@ foreach ($dataPosts as $post) {
     // Post timestamp
     echo '            <div class="text-gray-500 text-sm">' . htmlspecialchars($post['time']) . '</div>';
     echo '        </div>';
+
+    if(isset($_SESSION['admin'])){
+        if($_SESSION['admin'] == 1){
+            $currentUrl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+            $_SESSION['redirectBackUrl'] = $currentUrl;
+            echo '<button class="bg-red-500 hover:bg-red-700 text-white font-bold">';
+            echo '<a href="../admin/deletepost.php?id=' . $post['postID'] . '">Delete post</a>';
+            echo '</button>';
+        }
+    }
+}
+
+if(isset($_SESSION['admin'])){
+    if($_SESSION['admin'] == 1){
+        echo "<a href='../admin/index.php'>Admin panel</a>";
+    }
 }
 
 echo '    </div>';
 echo '</div>';
+
+
 ?>

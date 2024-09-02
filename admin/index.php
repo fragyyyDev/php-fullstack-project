@@ -19,7 +19,6 @@ $sqlUsers = "SELECT COUNT(*) as total FROM cms_users";
 $c = $db->prepare($sqlUsers);
 $c->execute();
 $count = $c->fetch(PDO::FETCH_ASSOC)['total'];
-var_dump($count);
 
 $totalPages = ceil($count / 10);
 
@@ -37,12 +36,10 @@ $offset = ($page - 1) * 10;
 
 $sql_final = "SELECT * FROM cms_users LIMIT $offset, 10";
 
-echo $sql_final;
 $con = $db->prepare($sql_final);
 $con->execute();
 $data = $con->fetchAll(PDO::FETCH_ASSOC);
 
-var_dump($data);
 
 //---------------------------------------------------------
 

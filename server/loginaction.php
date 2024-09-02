@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ":email" => $email,
             ":password" => $passwordHashed,
         ];
-        $sql = "SELECT * FROM `cms-users` WHERE email = :email AND pass = :password";
+        $sql = "SELECT * FROM `cms_users` WHERE email = :email AND pass = :password";
         $con = $db->prepare($sql);
         $con->execute($ins_data);
         $data = $con->fetchAll(PDO::FETCH_ASSOC);
@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["LOGGED"] = true;
             $_SESSION['ID'] = $data[0]['ID'];
             $_SESSION['TIME'] = time();
-            $_SESSION['password'] = $passwordHashed;
+            $_SESSION['hashedPass'] = $passwordHashed;
             $_SESSION['email'] = $email;
             echo 'Logged in succesfully please wait while we redirect you to the main page';
             header( "refresh:2;url=../client/main.php" );

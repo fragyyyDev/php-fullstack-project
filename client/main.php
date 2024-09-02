@@ -183,8 +183,16 @@ foreach ($dataPosts as $post) {
         if($_SESSION['admin'] == 1){
             $currentUrl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
             $_SESSION['redirectBackUrl'] = $currentUrl;
-            echo '<button class="bg-red-500 hover:bg-red-700 text-white font-bold">';
+            echo '<button class="bg-red-500 hover:bg-red-700 text-white font-bold p-4">';
             echo '<a href="../admin/deletepost.php?id=' . $post['postID'] . '">Delete post</a>';
+            echo '</button>';
+
+            echo '<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold p-4 ml-10">';
+            echo '<a href="../adminPosts/update_form.php?id=' . $post['postID'] . '">Update post</a>';
+            echo '</button>';
+
+            echo '<button class="bg-green-500 hover:bg-green-700 text-white font-bold p-4 ml-10">';
+            echo '<a href="../adminPosts/single.php?id=' . $post['postID'] . '">More info</a>';
             echo '</button>';
         }
     }

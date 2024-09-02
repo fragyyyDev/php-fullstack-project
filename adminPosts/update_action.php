@@ -78,29 +78,23 @@ if ($id !== null && isset($_POST["title"]) && isset($_POST["text"]) && isset($_P
     }
 
     if (!$error) {
-        // Prepare SQL statement to update the post
         $sql = "UPDATE cms_posts SET title = :title, text = :text, image = :image WHERE postID = :postID AND authorID = :authorID";
 
-        // Prepare data for the SQL query
         $ins = [
             ":title" => $_POST["title"],
             ":text" => $_POST["text"],
-            ":image" => $imagePath, // Use the new image path or keep the existing one
+            ":image" => $imagePath, 
             ":postID" => $_POST["postID"],
             ":authorID" => $_POST["authorID"],
         ];
 
-        // Execute the SQL statement
         $con = $db->prepare($sql);
         $con->execute($ins);
-
-        // Redirect to the specified page after update
-        header("Location: index.php?p=" . urlencode($page));
+        $goBackUrl = $_SESSION['redirectBackUrl'];
+        header('Location:' . $goBackUrl);
         exit();
     }
 } else {
-    // Handle error if required POST data is missing
     echo "Missing required fields.";
-    // Optionally redirect to an error page or show an error message
 }
 

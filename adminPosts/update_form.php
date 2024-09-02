@@ -17,11 +17,9 @@ if (isset($_SESSION['admin']) && isset($_SESSION['LOGGED'])) {
 
 //-----------------------------------------------------------------------------------------
 
-if(isset($_GET) && is_numeric($_GET["id"]) && is_numeric($_GET["page"]) ){
+if(isset($_GET) && is_numeric($_GET["id"])){
     $id = $_GET['id'];
-    $page = $_GET['page'];
     $_SESSION["id"] = $id;
-    $_SESSION["page"] = $page;
     $sql = "SELECT * FROM cms_posts WHERE postID = :id";
     $ins = [
         ':id'=>$id

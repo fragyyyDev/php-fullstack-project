@@ -1,6 +1,18 @@
 <?php 
+session_start();
 
 
+if (isset($_SESSION['LOGGED']) && $_SESSION['LOGGED'] == true) {
+    echo $htmlClient;
+} else {
+    header("Location: register.php");
+}
+
+
+
+if (isset($_SESSION['LOGGED'])) { // Adjust this check based on your session variable
+    echo '<a href="../server/logout.php" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Log Out</a>';
+}
 
 ?>
 
@@ -20,3 +32,4 @@
 </form>
 </body>
 </html>
+

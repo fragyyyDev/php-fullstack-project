@@ -21,6 +21,13 @@
     include "../db/db.php";
     session_start();
 
+    if (isset($_SESSION['LOGGED']) && $_SESSION['LOGGED'] == true) {
+        echo $htmlClient;
+    } else {
+        header("Location: register.php");
+    }
+
+
 if (isset($_GET['post'])) {
     $authorID = htmlspecialchars($_GET['post']);
 } else {

@@ -31,6 +31,8 @@ $htmlClient = "<!DOCTYPE html>
 <button  class='bg-gray-400 shadow-xl p-4' id='setupProfile'><a href='settings.php'>Setup profile info</a></button>
 ";
 
+
+
 if(isset($_SESSION['hashedPass'])){
     $password = $_SESSION['hashedPass'];
 }
@@ -42,17 +44,11 @@ if(isset($_SESSION['email'])){
 
 //-------------------------------------------------
 
-if(isset($_SESSION['admin']) AND isset($_SESSION['LOGGED'])){
-    if($_SESSION['admin'] == 1 AND $_SESSION['LOGGED'] == true){
-        echo $html_admin;
+    if (isset($_SESSION['LOGGED']) && $_SESSION['LOGGED'] == true) {
+        echo $htmlClient;
+    } else {
+        header("Location: register.php");
     }
-} else {
-    if(isset($_SESSION['LOGGED'])){
-        if($_SESSION['LOGGED'] == true){
-            echo $htmlClient;
-        }
-    }
-}
 
 $ins_dataProfile = [
     ":password" => $password,

@@ -21,6 +21,17 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_SESSION['ID'])) {
         ];
         $con = $db->prepare($sql);
         $con->execute($ins);
+
+        $log_sql = "INSERT INTO cms_log (userID, type, message, value) VALUES (:userID, :type, :message, :value)";
+        $log_data = [
+            ":userID" => $userID,
+            ":type" => 'DELETE',
+            ":message" => 'Post has been deleted by his owner',
+            ":value" => "Post ID: $id"
+        ];
+        $log_con = $db->prepare($log_sql);
+        $log_con->execute($log_data);
+
         $goBackUrl = $_SESSION['redirectBackUrl'];
         header('Location:' . $goBackUrl);
         exit();

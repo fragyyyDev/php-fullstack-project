@@ -12,6 +12,18 @@ if(isset($_SESSION['admin'])){
             ];
             $con = $db->prepare($sql);
             $con->execute($ins);
+
+            // posilani do logu 
+            $log_sql = "INSERT INTO cms_log (userID, type, message, value) VALUES (:userID, :type, :message, :value)";
+            $log_data = [
+                ":userID" => $_SESSION['ID'],
+                ":type" => 'DELETE',
+                ":message" => 'Post deleted by admin',
+                ":value" => "post ID: $id"
+            ];
+            $log_con = $db->prepare($log_sql);
+            $log_con->execute($log_data);
+
             $goBackUrl = $_SESSION['redirectBackUrl'];
             header('Location:' . $goBackUrl);
             exit();

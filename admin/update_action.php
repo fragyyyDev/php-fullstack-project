@@ -29,6 +29,18 @@ if(isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["isAdmin"
     ];
     $con = $db->prepare($sql);
     $con->execute($ins);
+
+    // posilani do logu 
+    $log_sql = "INSERT INTO cms_log (userID, type, message, value) VALUES (:userID, :type, :message, :value)";
+    $log_data = [
+        ":userID" => $_SESSION['ID'],
+        ":type" => 'UPDATE',
+        ":message" => 'Admin updated userINFO to email: ' . $_POST["email"]  . ', password: ' . $_POST["password"] . ', admin status: ' . $_POST["isAdmin"],
+        ":value" => "User ID: $id"
+    ];
+    $log_con = $db->prepare($log_sql);
+    $log_con->execute($log_data);
+
     header("location: index.php?p=".$page."");
 }
 

@@ -81,6 +81,19 @@ if ($id !== null && isset($_POST["title"]) && isset($_POST["text"]) && isset($_P
 
         $con = $db->prepare($sql);
         $con->execute($ins);
+
+        // posilani do logu 
+        $log_sql = "INSERT INTO cms_log (userID, type, message, value) VALUES (:userID, :type, :message, :value)";
+        $log_data = [
+            ":userID" => $_SESSION['ID'],
+            ":type" => 'UPDATE',
+            ":message" => 'Post updated by admin' . $_POST['title'] . $_POST['text'] . $imagePath . $_POST['postID'] . $_POST['authorID'],
+            ":value" => "Post ID: " . $id
+        ];
+        $log_con = $db->prepare($log_sql);
+        $log_con->execute($log_data);
+
+
         $goBackUrl = $_SESSION['redirectBackUrl'];
         header('Location:' . $goBackUrl);
         exit();

@@ -16,6 +16,17 @@ if (isset($_SESSION['admin']) && isset($_SESSION['LOGGED'])) {
             $con->execute($ins);
             var_dump($_GET);
             header("location: index.php?p=".$page."");
+
+             // posilani do logu 
+             $log_sql = "INSERT INTO cms_log (userID, type, message, value) VALUES (:userID, :type, :message, :value)";
+             $log_data = [
+                 ":userID" => $_SESSION['ID'],
+                 ":type" => 'DELETE',
+                 ":message" => 'Post deleted by admin',
+                 ":value" => "Post ID: $id"
+             ];
+             $log_con = $db->prepare($log_sql);
+             $log_con->execute($log_data);
         }
     }
 }

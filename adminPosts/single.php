@@ -38,7 +38,6 @@ $con = $db->prepare($sql);
 $con->execute($ins_data);
 $dataPosts = $con->fetchAll(PDO::FETCH_ASSOC);
 
-// Log the view action
 $log_sql = "INSERT INTO cms_log (userID, type, message, value) VALUES (:userID, :type, :message, :value)";
 $log_data = [
     ":userID" => $_SESSION['ID'],
@@ -163,7 +162,6 @@ foreach ($dataPosts as $post) {
 </head>
 <body class='bg-gray-900 text-gray-100 flex justify-center items-center'>
     <div class='flex justify-center'>
-        <!-- Content will be rendered here -->
     </div>
 </body>
 </html>

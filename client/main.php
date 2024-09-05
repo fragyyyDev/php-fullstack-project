@@ -63,8 +63,8 @@ $dataPosts = $con->fetchAll(PDO::FETCH_ASSOC);
             <div class="flex justify-center mb-4">
                 <button id="makePost" class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Make a Post</button>
                 <form action="../server/createpost.php" method="post" enctype="multipart/form-data" class="hideThis hidden ml-4">
-                    <input type="text" name="title" placeholder="Title" class="p-2 border border-gray-700 rounded mb-2 block w-full">
-                    <input type="text" name="text" placeholder="Text" class="p-2 border border-gray-700 rounded mb-2 block w-full">
+                    <input type="text" name="title" placeholder="Title" class="p-2 border border-gray-700 rounded mb-2 block w-full text-black">
+                    <input type="text" name="text" placeholder="Text" class="p-2 border border-gray-700 rounded mb-2 block w-full text-black">
                     <input type="file" name="file" id="file" required class="mb-2">
                     <input type="submit" value="Submit" id="submitButton" class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
                 </form>
@@ -160,7 +160,7 @@ $dataPosts = $con->fetchAll(PDO::FETCH_ASSOC);
                         <div id="commentForm-<?php echo $post['postID']; ?>" class="hidden mt-2">
                             <form action="../server/createcomment.php" method="POST">
                                 <input type="hidden" name="postID" value="<?php echo htmlspecialchars($post['postID']); ?>">
-                                <textarea name="comment" placeholder="Write a comment..." class="w-full p-2 border border-gray-700 rounded"></textarea>
+                                <textarea name="comment" placeholder="Write a comment..." class="w-full p-2 border border-gray-700 rounded text-black"></textarea>
                                 <button type="submit" class="bg-blue-600 text-white p-2 rounded mt-2 hover:bg-blue-700">Submit</button>
                             </form>
                         </div>
@@ -173,6 +173,19 @@ $dataPosts = $con->fetchAll(PDO::FETCH_ASSOC);
         function showCommentForm(postID) {
             document.getElementById('commentForm-' + postID).classList.toggle('hidden');
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+        const makePostButton = document.getElementById('makePost');
+        const postForm = document.querySelector('form[action="../server/createpost.php"]');
+            
+        makePostButton.addEventListener('click', function() {
+            postForm.classList.toggle('hidden');
+        });
+
+        postForm.addEventListener('submit', function() {
+            postForm.classList.add('hidden');
+        });
+        });
     </script>
 </body>
 </html>

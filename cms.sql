@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 01, 2024 at 09:17 PM
+-- Generation Time: Sep 05, 2024 at 10:18 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,6 +24,43 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cms_comments`
+--
+
+CREATE TABLE `cms_comments` (
+  `ID` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `postID` int(11) NOT NULL,
+  `message` varchar(999) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cms_comments`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cms_log`
+--
+
+CREATE TABLE `cms_log` (
+  `logID` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `type` varchar(50) NOT NULL,
+  `message` varchar(100) NOT NULL,
+  `value` varchar(500) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cms_log`
+--
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `cms_pfp`
 --
 
@@ -34,11 +71,6 @@ CREATE TABLE `cms_pfp` (
   `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `extension` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `cms_pfp`
---
-
 
 -- --------------------------------------------------------
 
@@ -59,9 +91,6 @@ CREATE TABLE `cms_posts` (
 -- Dumping data for table `cms_posts`
 --
 
-INSERT INTO `cms_posts` (`postID`, `authorID`, `title`, `text`, `time`, `image`) VALUES
-
-
 -- --------------------------------------------------------
 
 --
@@ -81,11 +110,8 @@ CREATE TABLE `cms_users` (
 --
 
 INSERT INTO `cms_users` (`ID`, `email`, `pass`, `time`, `admin`) VALUES
-(1, 'adios@adios', 'd8542114d7d40f3c82fc0919efc644df30f4e827c2bd6b83b9dbec8358b2fbc4', '2024-08-22 08:18:04', 0),
-(2, 'abc@abc', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '2024-08-29 20:36:02', 0),
-(3, 'avc@avc', 'a74247278cad7882bc66ecbfd0ffd62c7ab7c92774a68d4888d375abce9d1155', '2024-08-31 09:39:45', 0),
-(4, 'adc@adc', '576d1184c541e9f92af74363eeeedd61f3aecd1b265347025e8368e5a153dcd3', '2024-08-31 15:35:07', 0),
-(5, 'jojo@jojo', '54af2a2960e582263c45971cdd40da4ae31ede1db5395629d910f056479de12d', '2024-08-31 16:39:25', 0);
+(11, 'abc@abc', 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad', '2024-09-05 20:10:45', 0),
+(12, 'admin@admin.com', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', '2024-09-05 20:16:55', 1);
 
 -- --------------------------------------------------------
 
@@ -102,19 +128,20 @@ CREATE TABLE `cms_users_meta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `cms_users_meta`
---
-
-INSERT INTO `cms_users_meta` (`informationID`, `userID`, `keyWord`, `value`, `time`) VALUES
-(1, 3, 'username', 'ssss', '2024-08-31 10:05:48'),
-(2, 4, 'username', 'asd', '2024-08-31 16:15:47'),
-(3, 4, 'date', '0111-11-11', '2024-08-31 16:15:47'),
-(4, 5, 'username', 'sigma ', '2024-08-31 17:05:09'),
-(5, 5, 'date', '0111-11-11', '2024-08-31 17:05:09');
-
---
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `cms_comments`
+--
+ALTER TABLE `cms_comments`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `cms_log`
+--
+ALTER TABLE `cms_log`
+  ADD PRIMARY KEY (`logID`);
 
 --
 -- Indexes for table `cms_pfp`
@@ -145,28 +172,40 @@ ALTER TABLE `cms_users_meta`
 --
 
 --
+-- AUTO_INCREMENT for table `cms_comments`
+--
+ALTER TABLE `cms_comments`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `cms_log`
+--
+ALTER TABLE `cms_log`
+  MODIFY `logID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+
+--
 -- AUTO_INCREMENT for table `cms_pfp`
 --
 ALTER TABLE `cms_pfp`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `cms_posts`
 --
 ALTER TABLE `cms_posts`
-  MODIFY `postID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `postID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `cms_users`
 --
 ALTER TABLE `cms_users`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `cms_users_meta`
 --
 ALTER TABLE `cms_users_meta`
-  MODIFY `informationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `informationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

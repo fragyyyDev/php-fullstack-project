@@ -13,7 +13,6 @@ if (isset($_SESSION['admin']) && isset($_SESSION['LOGGED'])) {
         $sql = "SELECT * FROM cms_users WHERE ID = :id";
         $ins_data = [":id" => $id];
 
-        // Log the action
         $log_sql = "INSERT INTO cms_log (userID, type, message, value) VALUES (:userID, :type, :message, :value)";
         $log_data = [
             ":userID" => $_SESSION['ID'],
@@ -40,7 +39,6 @@ if (isset($_SESSION['admin']) && isset($_SESSION['LOGGED'])) {
 
         $username = $date = '';
 
-        // Display profile information
         echo "<div class='container mx-auto p-6 bg-gray-800 text-gray-100 rounded-lg shadow-lg'>";
         echo "<h2 class='text-2xl font-bold mb-4'>User Profile</h2>";
         echo "<p class='p-4 bg-gray-700 rounded-lg shadow-md mb-4'>Email: " . htmlspecialchars($dataProfileInfo[0]['email']) . '</p>'; 

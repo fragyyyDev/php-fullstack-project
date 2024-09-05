@@ -20,7 +20,7 @@ $c = $db->prepare($sqlPosts);
 $c->execute();
 $count = $c->fetch(PDO::FETCH_ASSOC)['total'];
 
-$totalPages = ceil($count / 10);
+$totalPagesPost = ceil($count / 10);
 
 for($i = 1; $i <= $totalPages; $i++) {
     echo "<a class='p-2 text-black' href=\"index.php?p=".$i."\">".$i." |  " ."</a>";
@@ -34,11 +34,11 @@ if(isset($_GET["p"]) && !empty($_GET["p"]) && $_GET["p"] > 0) {
 
 $offset = ($page - 1) * 10;
 
-$sql_final = "SELECT * FROM cms_posts LIMIT $offset, 10";
+$sql_finalPost = "SELECT * FROM cms_posts LIMIT $offset, 10";
 
 $con = $db->prepare($sql_final);
 $con->execute();
-$data = $con->fetchAll(PDO::FETCH_ASSOC);
+$dataPost = $con->fetchAll(PDO::FETCH_ASSOC);
 
 
 //---------------------------------------------------------

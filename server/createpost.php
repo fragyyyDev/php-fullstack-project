@@ -67,8 +67,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $log_data = [
                 ":userID" => $_SESSION['ID'],
                 ":type" => 'INSERT',
-                ":message" => 'Post made by a user details',
-                ":value" => "Post ID: " . $title . $text . $target_file
+                ":message" => 'Post made by a user',
+                ":value" => "Post ID:   " . $title . " " . $text . " " .  $target_file
             ];
               $log_con = $db->prepare($log_sql);
              $log_con->execute($log_data);

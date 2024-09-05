@@ -87,6 +87,11 @@ $data = $con->fetchAll(PDO::FETCH_ASSOC);
         }
         ?>
     </table>
-    <a href="../adminPosts/index.php">POST MANAGEMENT</a>
+    <div class="flex gap-8">
+        <a href="../adminPosts/index.php" class='p-2 bg-gray-400'>POST MANAGEMENT</a>
+        <a href="../log/index.php" class='p-2 bg-gray-400'>CHANGE LOG</a>
+    </div>
+    
+    
 </body>
 </html>

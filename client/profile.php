@@ -123,7 +123,11 @@ foreach ($dataPosts as $post) {
         $authorNameResult = $con->fetch(PDO::FETCH_ASSOC);
         if ($authorNameResult) {
             $username = htmlspecialchars($authorNameResult['value']);
+        } else {
+            $username = $_SESSION['ID'];   
         }
+    } else {
+        $username = $_SESSION['ID'];   
     }
 
     echo '        <div class="p-4">';
@@ -153,7 +157,7 @@ foreach ($dataPosts as $post) {
     
     $currentUrl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     $_SESSION['redirectBackUrl'] = $currentUrl;
-    echo '<button class="bg-red-500 hover:bg-red-700 text-white font-bold">';
+    echo '<button class="bg-red-500 hover:bg-red-700 text-white font-bold p-2">';
     echo '<a href="../admin/deletepost.php?id=' . $postID . '">Delete post</a>';
     echo '</button>';
     

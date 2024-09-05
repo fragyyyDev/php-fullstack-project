@@ -60,10 +60,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ]; 
             $con = $db->prepare($sql); 
             $con->execute($ins_data); 
-
+            
             $ins_data[':meta_key'] = 'date';
             $ins_data[':value'] = $date;
             $con->execute($ins_data); 
+            $log_sql = "INSERT INTO cms_log (userID, type, message, value) VALUES (:userID, :type, :message, :value)";
+            $log_data = [
+                ":userID" => $_SESSION['ID'],
+                ":type" => 'INSERT',
+                ":message" => 'User inserted meta data',
+                ":value" => "Meta info: " . $ins_data[':meta_key'] . $value
+            ];
+              $log_con = $db->prepare($log_sql);
+             $log_con->execute($log_data);
+
+            
         } else {
             // Update existing USERNAME and DATE records
             $sql = "UPDATE `cms_users_meta` SET `value` = :value WHERE `userID` = :userID AND `keyWord` = :meta_key";
@@ -78,6 +89,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $ins_data[':meta_key'] = 'date';
             $ins_data[':value'] = $date;
             $con->execute($ins_data);
+
+            $log_sql = "INSERT INTO cms_log (userID, type, message, value) VALUES (:userID, :type, :message, :value)";
+            $log_data = [
+                ":userID" => $_SESSION['ID'],
+                ":type" => 'UPDATE',
+                ":message" => 'User updated meta data',
+                ":value" => "Meta info: " . $ins_data[':meta_key'] . $value
+            ];
+              $log_con = $db->prepare($log_sql);
+             $log_con->execute($log_data);
         }
 
         // Handle Profile Picture Upload
@@ -129,6 +150,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             ":directory" => $target_file,
                             ":extension" => $imageFileType
                         ]);
+                        $log_sql = "INSERT INTO cms_log (userID, type, message, value) VALUES (:userID, :type, :message, :value)";
+                        $log_data = [
+                            ":userID" => $_SESSION['ID'],
+                            ":type" => 'INSERT',
+                            ":message" => 'User inserted profile picture',
+                            ":value" => "PFP path: " . $target_file . $imageFileType
+                        ];
+                          $log_con = $db->prepare($log_sql);
+                         $log_con->execute($log_data);
                     } else {
                         // Update existing profile picture entry
                         $sqlUpdatePfp = "UPDATE `cms_pfp` SET `directory` = :directory, `extension` = :extension, `time` = NULL
@@ -139,6 +169,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             ":extension" => $imageFileType,
                             ":userID" => $dataID['ID']
                         ]);
+                        $log_sql = "INSERT INTO cms_log (userID, type, message, value) VALUES (:userID, :type, :message, :value)";
+                        $log_data = [
+                            ":userID" => $_SESSION['ID'],
+                            ":type" => 'UPDATE',
+                            ":message" => 'User updated profile picture',
+                            ":value" => "PFP path: " . $target_file . $imageFileType
+                        ];
+                          $log_con = $db->prepare($log_sql);
+                         $log_con->execute($log_data);
                     }
 
                     echo "The file has been uploaded and the path stored in the database.";

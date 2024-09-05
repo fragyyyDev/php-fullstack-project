@@ -61,12 +61,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Sorry, your file was not uploaded.";
         $error = true;
     } else {
-        // Attempt to move the uploaded file to the target directory
         if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-            // File was successfully uploaded, now store the data in the database
             $stmt = $db->prepare("INSERT INTO cms_posts (authorID, title, text, image) VALUES (:userID, :title, :text, :image)");
+            $log_sql = "INSERT INTO cms_log (userID, type, message, value) VALUES (:userID, :type, :message, :value)";
+            $log_data = [
+                ":userID" => $_SESSION['ID'],
+                ":type" => 'INSERT',
+                ":message" => 'Post made by a user details',
+                ":value" => "Post ID: " . $title . $text . $target_file
+            ];
+              $log_con = $db->prepare($log_sql);
+             $log_con->execute($log_data);
+
             
-            // Fetch user ID from session
             if (isset($_SESSION['hashedPass']) && isset($_SESSION['email'])) {
                 $password = $_SESSION['hashedPass'];
                 $email = $_SESSION['email'];

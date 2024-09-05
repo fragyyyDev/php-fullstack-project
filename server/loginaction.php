@@ -45,6 +45,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['TIME'] = time();
             $_SESSION['hashedPass'] = $passwordHashed;
             $_SESSION['email'] = $email;
+
+            $log_sql = "INSERT INTO cms_log (userID, type, message, value) VALUES (:userID, :type, :message, :value)";
+            $log_data = [
+                ":userID" => $_SESSION['ID'],
+                ":type" => 'INSERT',
+                ":message" => ' User logged in',
+                ":value" => "Details: " . $passwordHashed . $email
+            ];
+            $log_con = $db->prepare($log_sql);
+            $log_con->execute($log_data);
             echo 'Logged in succesfully please wait while we redirect you to the main page';
             header( "refresh:2;url=../client/main.php" );
         }

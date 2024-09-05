@@ -23,7 +23,7 @@ if (isset($_SESSION['admin']) && isset($_SESSION['LOGGED'])) {
                  ":userID" => $_SESSION['ID'],
                  ":type" => 'DELETE',
                  ":message" => 'Post deleted by admin',
-                 ":value" => "Post ID: $id"
+                 ":value" => "Post ID: " . $id
              ];
              $log_con = $db->prepare($log_sql);
              $log_con->execute($log_data);

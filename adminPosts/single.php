@@ -34,7 +34,7 @@
         ":userID" => $_SESSION['ID'],
         ":type" => 'SELECT',
         ":message" => 'Post details viewed by admin',
-        ":value" => "Post ID: $id"
+        ":value" => "Post ID: " . $id
     ];
     $log_con = $db->prepare($log_sql);
     $log_con->execute($log_data);

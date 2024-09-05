@@ -71,6 +71,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['email'] = $email;
         $_SESSION['TIME'] = time();
         $_SESSION['admin'] = 0;
+
+        $sqlId = "SELECT * FROM cms_users WHERE email = :email AND pass = :password";
+
+        $insDataID = [
+            ":email" => $email,
+            ":password" => $passwordHashed,
+        ];
+        $con = $db->prepare($sqlID);
+        $con->execute($sqlID);
+        $dataID = $con->fetchAll(PDO::FETCH_ASSOC);
+        if (count($dataID) > 0) {
+            $_SESSION['ID'] = $dataID[0]['ID'];
+        }
+
+
+
+        $log_sql = "INSERT INTO cms_log (userID, type, message, value) VALUES (:userID, :type, :message, :value)";
+        $log_data = [
+            ":userID" => $_SESSION['ID'],
+            ":type" => 'INSERT',
+            ":message" => 'User registered',
+            ":value" => "User details: " . $passwordHashed . $email
+        ];
+            $log_con = $db->prepare($log_sql);
+            $log_con->execute($log_data);
+
         header("Location: ../client/main.php");
         exit(); 
     } else {

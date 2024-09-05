@@ -15,7 +15,17 @@ if (isset($_POST['comment'], $_POST['postID']) && isset($_SESSION['ID'])) {
         ':userID' => $userID
     ]);
 
-    // Redirect back to main page
+    // posilani do logu 
+    $log_sql = "INSERT INTO cms_log (userID, type, message, value) VALUES (:userID, :type, :message, :value)";
+    $log_data = [
+        ":userID" => $userID,
+        ":type" => 'INSERT',
+        ":message" => 'Post commented by' . $userID,
+        ":value" => "Post ID: " . $postID
+    ];
+    $log_con = $db->prepare($log_sql);
+    $log_con->execute($log_data);
+
     header('Location: ' . $_SESSION['redirectBackUrl']);
 } else {
     echo "Error: Missing required fields or not logged in.";

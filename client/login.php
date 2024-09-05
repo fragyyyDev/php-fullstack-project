@@ -1,34 +1,46 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login Page</title>
+    <script src='https://cdn.tailwindcss.com'></script>
+    <style>
+        .bg-container { background-color: #1f2937; } /* Dark Grey */
+        .text-main { color: #e5e7eb; } /* Lighter Grey */
+        .text-header { color: #60a5fa; } /* Light Blue */
+        .bg-primary { background-color: #1e40af; } /* Blue */
+        .bg-secondary { background-color: #374151; } /* Medium Grey */
+    </style>
 </head>
-<body>
-    <h2> Login welcome</h2>
-    <form action="../server/loginaction.php" method='post'>
-        <input type="email" name='email' placeholder='Email'>
-        <input type="password" name='password' placeholder='password'>
-        <input type="submit" value="Odesli to">
-    </form>
-    <h3>Are you not our user yet? No problem register here</h3>
-    <a href="register.php">Register</a>
-    <?php
-        session_start();
-        echo '<br>';
-        echo "EXAMPLE ADMIN : admin@admin.com     admin123";
-        echo '<br>';
-        echo "EXAMPLE CLIENT : abc@abc     abc";
+<body class="bg-container text-main min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-md bg-secondary p-8 rounded-lg shadow-lg">
+        <h2 class="text-center text-3xl text-header mb-6">Login Welcome</h2>
+        <form action="../server/loginaction.php" method='post' class="flex flex-col gap-4">
+            <input type="email" name="email" placeholder="Email" class="p-2 rounded bg-gray-200 text-black" required>
+            <input type="password" name="password" placeholder="Password" class="p-2 rounded bg-gray-200 text-black" required>
+            <input type="submit" value="Submit" class="bg-primary text-white p-2 rounded hover:bg-blue-600 cursor-pointer">
+        </form>
 
-        if(isset($_SESSION["error"])){
-            foreach($_SESSION["error"] as $key => $message) {
-                echo "<p>$key: $message</p>";
-            }
-            unset($_SESSION["error"]);
-        }
-    
-    ?>
+        <h3 class="mt-6 text-center text-xl text-main">Not our user yet? No problem!</h3>
+        <div class="text-center mt-2">
+            <a href="register.php" class="text-header hover:text-blue-400">Register Here</a>
+        </div>
+
+        <div class="mt-4">
+            <?php
+                session_start();
+                echo "<p class='text-main mt-4'><strong>EXAMPLE ADMIN:</strong> admin@admin.com | admin123</p>";
+                echo "<p class='text-main'><strong>EXAMPLE CLIENT:</strong> abc@abc.com | abc</p>";
+                
+                if(isset($_SESSION['error'])) {
+                    foreach($_SESSION['error'] as $key => $message) {
+                        echo "<p class='text-red-500'>$key: $message</p>";
+                    }
+                    unset($_SESSION['error']);
+                }
+            ?>
+        </div>
+    </div>
 </body>
 </html>
